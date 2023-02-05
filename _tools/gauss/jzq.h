@@ -642,7 +642,6 @@ extern "C"
 
   FILE* _wfopen(const wchar_t* filename,const wchar_t* mode);
 }
-#endif
 
 namespace jzq_detail
 {
@@ -656,6 +655,7 @@ namespace jzq_detail
     return wide_str;
   }
 }
+#endif
 
 inline FILE* jzq_fopen(const char* filename,const char* mode)
 {
