@@ -1,17 +1,17 @@
-import tensorflow as tf
 import os
 import shutil
 
+from torch.utils.tensorboard import SummaryWriter
 
 class Logger(object):
-    def __init__(self, log_dir, suffix=None):
+    def __init__(self, log_dir, suffix=""):
         """Create a summary writer logging to log_dir."""
-        self.writer = tf.compat.v1.summary.FileWriter(log_dir, filename_suffix=suffix)
+        self.writer = SummaryWriter(log_dir=log_dir, filename_suffix=suffix)
 
     def scalar_summary(self, tag, value, step):
         """Log a scalar variable."""
-        summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
-        self.writer.add_summary(summary, step)
+        self.writer.add_scalar(tag, value, step)
+
 
 
 class ModelLogger(object):
