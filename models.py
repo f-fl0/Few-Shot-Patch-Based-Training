@@ -265,8 +265,8 @@ class PerceptualVGG19(nn.Module):
             )
             model.load_state_dict(torch.load(path))
         else:
-            # weights=VGG19_Weights.DEFAULT
-            model = models.vgg19(weights=VGG19_Weights.IMAGENET1K_V1)
+            # weights=models.VGG19_Weights.DEFAULT
+            model = models.vgg19(weights=models.VGG19_Weights.IMAGENET1K_V1)
         model.float()
         model.eval()
 
