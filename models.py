@@ -253,7 +253,7 @@ class PerceptualVGG19(nn.Module):
         super(PerceptualVGG19, self).__init__()
         if path is not None:
             print(f'Loading pre-trained VGG19 model from {path}')
-            model = models.vgg19(pretrained=False)
+            model = models.vgg19()
             model.classifier = nn.Sequential(
                 nn.Linear(512 * 8 * 8, 4096),
                 nn.ReLU(True),
@@ -265,7 +265,8 @@ class PerceptualVGG19(nn.Module):
             )
             model.load_state_dict(torch.load(path))
         else:
-            model = models.vgg19(pretrained=True)
+            # weights=VGG19_Weights.DEFAULT
+            model = models.vgg19(weights=VGG19_Weights.IMAGENET1K_V1)
         model.float()
         model.eval()
 
