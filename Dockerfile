@@ -35,6 +35,17 @@ RUN for tool in bilateralAdv disflow gauss; do \
   done;
 
 # ========================================
+FROM ubuntu:20.04 as downloader
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    wget \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN wget --quiet --show-progress --progress=bar:force:noscroll https://download.pytorch.org/models/vgg19-dcbb9e9d.pth
+
+# ========================================
 FROM base
 
 ENV PYTHONUNBUFFERED=1
@@ -53,3 +64,4 @@ RUN python -m pip install --no-cache-dir -r requirements.txt \
   && rm -f requirements.txt
 
 COPY --from=builder /ws/compiled_tools/* /usr/bin/
+COPY --from=downloader /vgg19-dcbb9e9d.pth /root/.cache/torch/hub/checkpoints/vgg19-dcbb9e9d.pth
